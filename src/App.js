@@ -1,24 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Form from './components/form';
+import Card from './components/card';
+import { example, dummy } from './constant';
+
+import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 function App() {
+  const [state, setState] = useState({ events: [ ...dummy ], template: { ...example } })
+  const { events, template } = state;
+  
+  const submit = (data) => {
+    if (data.id) {
+      const newEvents = events.map((event) => {
+        return event.id === data.id ? data : event
+      })
+      setState({
+        ...state,
+        events: [ ...newEvents ],
+        template: { ...example  }
+      })
+      return
+    }
+    const newEvent = {
+      ...data,
+      id: new Date().valueOf(),
+    }
+    setState({
+      ...state,
+      events: [ ...events, newEvent ],
+      template: { ...example }
+    })
+  }
+
+  const hendelRemove = (id) => {
+    const filteredEvents = events.filter((event) => {
+      return event.id !== id
+    });
+    setState({
+      ...state,
+      events: filteredEvents
+    })
+  }
+
+  const hendelUpdate = (id) => {
+    const findEvent = events.find((event) => {
+      return event.id === id
+    });
+    setState({
+      ...state,
+      template: findEvent
+    })
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="form-container">
+        <Form template={template} submit={submit}/>  
+      </div>
+
+      <div className="todos">
+        {events.map((event) => {
+          return (
+            <Card key={event.id} onRemove={hendelRemove} onUpdate={hendelUpdate} data={event}/>
+          )
+        })}
+      </div>      
     </div>
   );
 }

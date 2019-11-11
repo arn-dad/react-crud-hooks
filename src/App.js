@@ -33,7 +33,7 @@ function App() {
     })
   }
 
-  const hendelRemove = (id) => {
+  const handleRemove = (id) => {
     const filteredEvents = events.filter((event) => {
       return event.id !== id
     });
@@ -43,7 +43,7 @@ function App() {
     })
   }
 
-  const hendelUpdate = (id) => {
+  const handleUpdate = (id) => {
     const findEvent = events.find((event) => {
       return event.id === id
     });
@@ -62,7 +62,7 @@ function App() {
       <div className="todos">
         {events.map((event) => {
           return (
-            <Card key={event.id} onRemove={hendelRemove} onUpdate={hendelUpdate} data={event}/>
+            <Card key={event.id} onRemove={handleRemove} onUpdate={handleUpdate} data={event}/>
           )
         })}
       </div>      

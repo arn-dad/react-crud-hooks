@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Context from '../../context/context';
 import './card.css';
 
 const Card = props => {
+  const { dispatch } = useContext(Context);
   const { name, location, description, id } = props.data;
   return (
     <div className="card">
@@ -18,8 +20,8 @@ const Card = props => {
     </div>
     <div className="extra content">
       <div className="ui two buttons">
-        <button onClick={props.onUpdate.bind(null, id)} className="ui yellow basic button">Update</button>
-        <button onClick={props.onRemove.bind(null, id)} className="ui red basic button">Remove</button>
+        <button onClick={() => {dispatch({ type: 'UPDATE', payload: id })}} className="ui yellow basic button">Update</button>
+        <button onClick={() => {dispatch({ type: 'REMOVE', payload: id })}} className="ui red basic button">Remove</button>
       </div>
     </div>
     </div>

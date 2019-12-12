@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from './components/form';
 import Card from './components/card';
 import { example, dummy } from './constant';
+import './redux/store/store'
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
